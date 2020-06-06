@@ -1,33 +1,32 @@
-Full Api Javascript for Automation by WhatsApp
-
-
 # 🕷Venom Bot🕸
 
 ![enter image description here](https://s2.click/venom.jpg)
 
 > Venom is a high-performance system developed with JavaScript to create a bot for WhatsApp, support for creating any interaction, such as customer service, media sending, sentence recognition based on artificial intelligence and all types of design architecture for WhatsApp.
 
+![enter image description here](https://s2.click/flyervenom.png)
 
 ## 🕷🕷 Functions Venom🕷🕷
-|  |  |
-|--|--|
-| Automatic QR Refresh | ✔ |
-| Send **text, image, video, audio and docs** | ✔ |
-| Get **contacts, chats, groups, group members**  | ✔ |
-| Send contacts | ✔ |
-| Send stickers | ✔ |
-| Multiple Sessions | ✔ |
-| Forward Messages | ✔ |
-| Receive message | ✔ |
-| 📍 Send location!!| ✔ |
-| 🕸🕸 **and much more**| ✔ |
 
+|                                                |     |
+| ---------------------------------------------- | --- |
+| Automatic QR Refresh                           | ✔   |
+| Send **text, image, video, audio and docs**    | ✔   |
+| Get **contacts, chats, groups, group members** | ✔   |
+| Send contacts                                  | ✔   |
+| Send stickers                                  | ✔   |
+| Multiple Sessions                              | ✔   |
+| Forward Messages                               | ✔   |
+| Receive message                                | ✔   |
+| 📍 Send location!!                             | ✔   |
+| 🕸🕸 **and much more**                           | ✔   |
 
 ## Installation
 
 ```bash
 > npm i --save @s2click/venom
 ```
+
 ## Getting started
 
 ```javascript
@@ -65,6 +64,7 @@ venom.create('support').then((supportClient) => {...});
 ## Optional create parameters
 
 Venom `create()` method third parameter can have the following optional parameters:
+
 ```javascript
 create('sessionName', qrCallback, {
   headless: true, // Headless chrome
@@ -76,7 +76,6 @@ create('sessionName', qrCallback, {
   refreshQR: 15000, // Will refresh QR every 15 seconds, 0 will load QR once. Default is 30 seconds
 });
 ```
-
 
 ## Exporting QR code
 
@@ -134,6 +133,7 @@ available can be found in [here](/src/api/layers) and
 [here](/src/lib/wapi/functions)
 
 ### Chatting
+
 ##### Here, `chatId` could be `<phoneNuber>@c.us` or `<phoneNumber>-<groupId>@c.us`
 
 ```javascript
@@ -332,6 +332,7 @@ client.onAddedToGroup(chatEvent => {
 });
 
 ```
+
 ### Other
 
 ```javascript
@@ -443,7 +444,6 @@ To build the entire project just run
 ```bash
 > npm run build
 ```
-
 
 ## Maintainers
 
