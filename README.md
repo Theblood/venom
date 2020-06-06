@@ -21,7 +21,7 @@ Full Api Javascript for Automation by WhatsApp
 | Receive message | ✔ |
 | 📍 Send location!!| ✔ |
 | 🕸🕸 **and much more**| ✔ |
-|
+
 
 ## Installation
 
