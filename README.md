@@ -1,5 +1,4 @@
-# venom
- Full Api Javascript for Automation by WhatsApp
+Full Api Javascript for Automation by WhatsApp
 
 
 # 🕷Venom Bot🕸
