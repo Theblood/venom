@@ -46,7 +46,7 @@
     "puppeteer"
   ],
   "author": "S2 Click",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/s2click/venom/issues"
   },
