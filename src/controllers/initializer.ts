@@ -100,11 +100,13 @@ export async function create(
                                                ▙▄▟▘▐▖▗▐▘ ▐ \n`);
 
   // Check for updates if needed
-  // if (!updatesChecked) {
-  //   spinnies.add('venom-version-spinner', { text: '🕷🕷🕷Checking for updates🕷🕷🕷' });
-  //   checkSullaVersion(spinnies);
-  //   updatesChecked = true;
-  // }
+  if (!updatesChecked) {
+    spinnies.add('venom-version-spinner', {
+      text: '🕷🕷🕷Checking for updates🕷🕷🕷',
+    });
+    checkSullaVersion(spinnies);
+    updatesChecked = true;
+  }
 
   // Initialize whatsapp
   spinnies.add(`${session}-auth`, {
