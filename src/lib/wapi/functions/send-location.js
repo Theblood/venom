@@ -53,6 +53,7 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNMMNNNMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 all copyright reservation for S2 Click, Inc
 */
+
 export async function sendLocation(chatId, latitude, longitude, caption) {
   const chat = Store.Chat.get(chatId);
   //let tempMsg = Object.create(chat.msgs.filter((msg) => msg.__x_isSentByMe)[0]);
