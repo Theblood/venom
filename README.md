@@ -77,7 +77,21 @@ create('sessionName', qrCallback, {
 });
 ```
 
-## Exporting QR code
+## Callback Status Session
+
+Gets the return if the session is `isLogged` or if it is `notLogged`
+
+```javascript
+create('sessionName', (statusFind) => {
+  console.log(statusFind);
+})
+  .then((client) => {
+    start(client);
+  })
+  .catch((erro) => console.log(erro));
+```
+
+## Exporting QR Code
 
 By default QR code will appear on the terminal. If you need to pass the QR
 somewhere else heres how:
@@ -104,7 +118,7 @@ function exportQR(qrCode, path) {
 }
 ```
 
-## Downloading files
+## Downloading Files
 
 Puppeteer takes care of the file downloading. The decryption is being done as
 fast as possible (outruns native methods). Supports big files!
@@ -126,7 +140,7 @@ client.onMessage(async (message) => {
 });
 ```
 
-## Basic functions (usage)
+## Basic Functions (usage)
 
 Not every available function is listed, for further look, every function
 available can be found in [here](/src/api/layers) and
@@ -157,7 +171,7 @@ await client.sendMentioned(chatId, 'Hello @5218113130740 and @5218243160777!', [
 // Reply to a message
 await client.reply(chatId, 'This is a reply!', message.id.toString());
 
-// Send file (venom will take care of mime types, just need the path)
+// Send file (sulla will take care of mime types, just need the path)
 await client.sendFile(chatId, 'path/to/file.pdf', 'cv.pdf', 'Curriculum');
 
 // Send gif
@@ -200,7 +214,7 @@ await client.stopTyping(chatId);
 await client.setChatState(chatId, 0 | 1 | 2);
 ```
 
-### Retrieving data
+## Retrieving Data
 
 ```javascript
 // Retrieve contacts
@@ -231,7 +245,7 @@ const url = await client.getProfilePicFromServer(chatId);
 const chat = await client.getChat(chatId);
 ```
 
-### Group functions
+## Group Functions
 
 ```javascript
 // groupId or chatId: leaveGroup 52123123-323235@g.us
@@ -267,7 +281,7 @@ await client.demoteParticipant(groupId, '123123@c.us');
 await client.getGroupAdmins(groupId);
 ```
 
-### Profile functions
+## Profile Functions
 
 ```javascript
 // Set client status
@@ -277,7 +291,7 @@ await client.setProfileStatus('On vacations! ✈️');
 await client.setProfileName('Venom bot');
 ```
 
-### Device functions
+## Device Functions
 
 ```javascript
 // Get device info
@@ -296,7 +310,7 @@ await client.isConnected();
 await client.getWAVersion();
 ```
 
-### Events
+## Events
 
 ```javascript
 // Listen to messages
@@ -333,7 +347,7 @@ client.onAddedToGroup(chatEvent => {
 
 ```
 
-### Other
+## Other
 
 ```javascript
 // Delete chat
@@ -351,7 +365,7 @@ const profile = await client.getNumberProfile('0000000@c.us');
 
 ## Misc
 
-There are some tricks for a better usage of venom.
+There are some tricks for a better usage of sulla.
 
 #### Keep session alive:
 
