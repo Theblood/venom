@@ -2,6 +2,12 @@
 
 _All notable changes to this project will be documented in this file. Dates are displayed in UTC._
 
+**1.0.4**
+
+7 June 2020
+
+    Add Status of Session
+
 **1.0.3**
 
 7 June 2020

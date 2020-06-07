@@ -61,7 +61,7 @@ import { map, takeUntil, tap, delay, switchMap } from 'rxjs/operators';
 import { Whatsapp } from '../api/whatsapp';
 import { CreateConfig, defaultOptions } from '../config/create-config';
 import { upToDate } from '../utils/semver';
-import { isAuthenticated, isInsideChat, retrieveQR } from './auth';
+import { isAuthenticated, isInsideChat, needsToScan, retrieveQR } from './auth';
 import { initWhatsapp, injectApi } from './browser';
 import chalk = require('chalk');
 import boxen = require('boxen');
@@ -72,21 +72,26 @@ const { version } = require('../../package.json');
 let updatesChecked = false;
 
 /**
+ * consult status of whatsapp client
+ */
+
+/**
  * Should be called to initialize whatsapp client
  */
 export async function create(
   session = 'session',
   catchQR?: (qrCode: string, asciiQR: string) => void,
+  statusFind?: (statusGet: string) => void,
   options?: CreateConfig
 ) {
   const spinnies = new Spinnies();
 
   console.log(`\n
-▗▄ ▄ ▄▄▄▄▄ ▄   ▄▄▄ ▗▄▄▖▗▄▖▗▄▖▄▄▄▖                           
- █▟█▙█▗█▄▙▝█  ▐▙ ▝ █ ▐█▐▛▙█▐▖█▙▄▖                           
- ▐█ █▌▐█▄▄▝███▝▜▄▛▘▜▙▟▀▐▛▜▌▜▘█▄▄▖                           
-                      ▐▙▖                                   
-▄▄▄▖       ▄▄▄▄▄▄▄▄▄▄▄▟▌▀▖     ▗▄▄▖           ▙           ▗▖
+▗▄ ▄ ▄  ▄▄▄ ▄   ▄▄▄  ▗▄▄▖▗▄▖ ▗▄▖▄▄▄▖                           
+ █▟█▙█  █▄▄ █   █    █ ▐█ █ █ █ █▄▄                           
+ ▐█ █▌  █▄▄ ███ ▜▄▛▘ ▜▙▟▀ █   █ █▄▄▖                           
+                                                      
+▄▄▄▖       ▄▄▄▄▄▄▄▄▄▄▄▟▌▀▖     ▗▄▄▖                        
 ▝▄ ▐▖     ▟▘▐         ▐▌ ▝▙    ▐  ▌ ▄▞▀▀▀▀▀▄▖ ▛▀▄        ▄▘▌
  ▝▄ ▐▖   ▐▘ ▟▖ ▜▀▀▀▀▀▌▐▖  ▝▚▖  ▐  ▙▞▘▗▞▀▀▀▚▖▝▙▛ ▝▜▖    ▗▀  ▌
   ▀▖ ▜  ▗▘ ▟█  ▜     ▝▐▌ ▟▖ ▜▖ ▐  █ ▟▘     ▐▖▝█   ▝▙▖▗▞▘   ▌
@@ -96,7 +101,7 @@ export async function create(
      ▝▚▗▛   ▐   ▘▘▘▘▘ ▐▌ ▟    ▀▄  ▌▝▙▖▝▀▀▀▘▗▞▘▛ ▐▌      ▐  ▌
       ▝▛    ▝▀▝▘▘▘▘▘▘▀▝▘▘▀     ▝▙ ▌  ▝▀▘▘▀▀▘  ▀▘▀       ▝▀▝▘
                                  ▚▌
-                                  ▘\n`);
+                                   \n`);
 
   // Check for updates if needed
   if (!updatesChecked) {
@@ -109,7 +114,7 @@ export async function create(
 
   // Initialize whatsapp
   spinnies.add(`${session}-auth`, {
-    text: '🕷🕷🕷Creating whatsapp instace...🕷🕷🕷',
+    text: '🕷🕷🕷Waiting...🕷🕷🕷',
   });
 
   const mergedOptions = { ...defaultOptions, ...options };
@@ -121,9 +126,16 @@ export async function create(
   // If not authenticated, show QR and wait for scan
   if (authenticated) {
     // Wait til inside chat
+    if (statusFind) {
+      statusFind('isLogged');
+    }
+
     await isInsideChat(waPage).toPromise();
     spinnies.succeed(`${session}-auth`, { text: '🕷🕷🕷Authenticated🕷🕷🕷' });
   } else {
+    if (statusFind) {
+      statusFind('notLogged');
+    }
     spinnies.update(`${session}-auth`, {
       text: `Authenticate to continue`,
     });
@@ -146,7 +158,6 @@ export async function create(
     await isInsideChat(waPage).toPromise();
     spinnies.succeed(`${session}-auth`, { text: '🕷🕷🕷Compilation Mutation🕷🕷🕷' });
   }
-
   spinnies.add(`${session}-inject`, { text: '🕷🕷🕷Injecting Sibionte...🕷🕷🕷' });
   waPage = await injectApi(waPage);
   spinnies.succeed(`${session}-inject`, { text: 'Starting With Success!' });
